@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 title System Hardware Information - DO NOT CLOSE
 color 1F
 echo ===============================================
-echo BASIC HARDWARE INFORMATION - by @SamirJunaid
+echo BASIC HARDWARE INFORMATION - By @SamirJunaid
 echo ===============================================
 echo.
 echo Creating log file...
@@ -15,6 +15,12 @@ echo --- COMPUTER INFORMATION ---
 echo --- COMPUTER INFORMATION --- >> "%logfile%"
 systeminfo | findstr /B /C:"Host Name" /C:"OS Name" /C:"OS Version" /C:"System Manufacturer" /C:"System Model" /C:"System Type" /C:"Total Physical Memory"
 systeminfo | findstr /B /C:"Host Name" /C:"OS Name" /C:"OS Version" /C:"System Manufacturer" /C:"System Model" /C:"System Type" /C:"Total Physical Memory" >> "%logfile%"
+echo Windows Installation Date:
+powershell -command "$os = Get-WmiObject Win32_OperatingSystem; $installDate = [Management.ManagementDateTimeConverter]::ToDateTime($os.InstallDate); Write-Host $installDate.ToString('yyyy-MM-dd HH:mm:ss')"
+powershell -command "$logPath = '%logfile%'; $os = Get-WmiObject Win32_OperatingSystem; $installDate = [Management.ManagementDateTimeConverter]::ToDateTime($os.InstallDate); Add-Content -Path $logPath -Value ('Windows Installation Date: ' + $installDate.ToString('yyyy-MM-dd HH:mm:ss'))"
+echo BIOS Release Date:
+powershell -command "$bios = Get-WmiObject Win32_BIOS; $biosDate = [Management.ManagementDateTimeConverter]::ToDateTime($bios.ReleaseDate); Write-Host $biosDate.ToString('yyyy-MM-dd')"
+powershell -command "$logPath = '%logfile%'; $bios = Get-WmiObject Win32_BIOS; $biosDate = [Management.ManagementDateTimeConverter]::ToDateTime($bios.ReleaseDate); Add-Content -Path $logPath -Value ('BIOS Release Date: ' + $biosDate.ToString('yyyy-MM-dd'))"
 echo.
 echo. >> "%logfile%"
 echo --- CPU INFORMATION ---
@@ -99,12 +105,14 @@ echo Type EXIT and press ENTER when you want to close
 echo Or press CTRL+C and select "No" to end the batch job
 echo ===============================================
 echo.
+
 :WAITLOOP
 set INPUT=
 set /p INPUT="Command (type EXIT to close): "
 if /i "%INPUT%"=="exit" goto ENDSCRIPT
 if /i "%INPUT%"=="quit" goto ENDSCRIPT
 goto WAITLOOP
+
 :ENDSCRIPT
 echo Closing in 5 seconds...
 timeout /t 5
