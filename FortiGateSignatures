@@ -1,0 +1,52 @@
+TikTok 
+F-SBID(--service HTTP;  --protocol tcp;
+       --regexp "(tiktok|tiktokcdn|tiktokv|tiktokeu-cdn|muscdn|musical\\.ly)";
+       --context host;     --no_case; --app_cat 21; --name "TikTok.HTTP";)
+
+F-SBID(--service HTTPS; --protocol tcp;
+       --regexp "(tiktok|tiktokcdn|tiktokv|tiktokeu-cdn|muscdn|musical\\.ly)";
+       --context ssl.sni;  --no_case; --app_cat 21; --name "TikTok.SSL";)
+
+
+
+
+
+NordVPN
+F-SBID(--service HTTPS; --protocol tcp;
+       --regexp "(nordvpn\\.com|nordlinks\\.com|nordlynx\\.com)";
+       --context ssl.sni;  --no_case; --app_cat 12; --name "NordVPN.SSL";)
+
+F-SBID(--service DNS;   --protocol udp;
+       --regexp "(nordvpn\\.com|nordlinks\\.com|nordlynx\\.com)";
+       --context dns.qry.name; --no_case; --app_cat 12; --name "NordVPN.DNS";)
+
+
+
+TurboVPN
+F-SBID(--service HTTPS; --protocol tcp;
+       --regexp "turbovpn";
+       --context ssl.sni;  --no_case; --app_cat 12; --name "TurboVPN.SSL";)
+
+F-SBID(--service DNS;   --protocol udp;
+       --regexp "turbovpn";
+       --context dns.qry.name; --no_case; --app_cat 12; --name "TurboVPN.DNS";)
+
+
+Tango App
+F-SBID(--service HTTP;  --protocol tcp;
+       --regexp "tango\\.me";
+       --context host;     --no_case; --app_cat 21; --name "Tango.HTTP";)
+
+F-SBID(--service HTTPS; --protocol tcp;
+       --regexp "tango\\.me";
+       --context ssl.sni;  --no_case; --app_cat 21; --name "Tango.SSL";)
+
+
+Bigo Live
+F-SBID(--service HTTP;  --protocol tcp;
+       --regexp "(bigo\\.tv|bigolive\\.tv|bigovideo\\.tv)";
+       --context host;     --no_case; --app_cat 21; --name "BigoLive.HTTP";)
+
+F-SBID(--service HTTPS; --protocol tcp;
+       --regexp "(bigo\\.tv|bigolive\\.tv|bigovideo\\.tv)";
+       --context ssl.sni;  --no_case; --app_cat 21; --name "BigoLive.SSL";)
